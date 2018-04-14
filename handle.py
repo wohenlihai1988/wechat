@@ -18,7 +18,7 @@ class Handle(object):
             timestamp = data.timestamp
             nonce = data.nonce
             echostr = data.echostr
-            token = "helloworld" #请按照公众平台官网\基本配置中信息填写
+            token = "helloworld" 
 
             list = [token, timestamp, nonce]
             list.sort()
@@ -35,15 +35,14 @@ class Handle(object):
         
     def POST(self):
         try:
-	    print 'post'
             webData = web.data()
-            print 'handle post webdata is ', webData
             recMsg = receive.parse_xml(webData)
-            if isinstance(recMsg, receive.Msg) and recmsg.MstType == 'text':
+            if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 content = 'test'
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
+		print replyMsg
                 return replyMsg.send()
             else:
                 print 'do nothing for now'

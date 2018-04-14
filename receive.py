@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as ET
-def parase_xml(web_data):
+def parse_xml(web_data):
     if len(web_data) == 0:
         return None
     xmlData = ET.fromstring(web_data)
     msg_type = xmlData.find('MsgType').text
+    print msg_type
     if msg_type == 'text':
-        return TextMsg(xmlData)
+	msg = TextMsg(xmlData)
+        return msg 
     elif msg_type == 'image':
         return ImageMsg(xmlData)
 
@@ -21,5 +23,8 @@ class Msg(object):
 class TextMsg(Msg):
     def __init__ (self, xmlData):
         Msg.__init__(self, xmlData)
+	self.Content = xmlData.find('Content').text.encode('utf-8')
+class ImageMsg(Msg):
+    def __init__ (self, xmlData):
         self.PicUrl = xmlData.find('PicUrl').text
         self.MediaId = xmlData.find('MediaId').text
