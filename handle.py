@@ -9,9 +9,11 @@ import web
 class Handle(object):
     def GET(self):
         try:
+            print 'get'
             data = web.input()
             if len(data) == 0:
                 return "hello, this is handle view"
+	    print data
             signature = data.signature
             timestamp = data.timestamp
             nonce = data.nonce
@@ -31,8 +33,9 @@ class Handle(object):
         except Exception, Argument:
             return Argument
         
-    def Post(self):
+    def POST(self):
         try:
+	    print 'post'
             webData = web.data()
             print 'handle post webdata is ', webData
             recMsg = receive.parse_xml(webData)
